@@ -1,0 +1,62 @@
+@baseUrl = http://localhost:5082/api
+
+### Liste des catégories
+GET {{baseUrl}}/categories
+Accept: application/json
+
+### Liste du catalogue
+GET {{baseUrl}}/products
+Accept: application/json
+
+### Lire un produit
+GET {{baseUrl}}/products/1
+Accept: application/json
+
+### Créer un produit -> 201
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Elden Ring",
+  "description": "Comme neuf.",
+  "price": 34.90,
+  "stock": 2,
+  "categoryId": 1
+}
+
+### Créer un produit invalide -> 400 ProblemDetails
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "price": 0,
+  "stock": -1,
+  "categoryId": 0
+}
+
+### Créer un produit dans une catégorie inexistante -> 400 { message }
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Jeu",
+  "price": 10,
+  "stock": 1,
+  "categoryId": 999
+}
+
+### Modifier un produit -> 200
+PUT {{baseUrl}}/products/1
+Content-Type: application/json
+
+{
+  "name": "The Last of Us Part II",
+  "description": null,
+  "price": 17.50,
+  "stock": 2,
+  "categoryId": 1
+}
+
+### Supprimer un produit -> 204 (puis 404)
+DELETE {{baseUrl}}/products/2
